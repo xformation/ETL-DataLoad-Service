@@ -13,12 +13,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.brc.etl.config.Constants;
 import com.brc.etl.domain.ETLDataLoad;
@@ -41,6 +49,9 @@ public class EtlDataLoadController {
 
 	@Autowired
 	private ETLDataLoadRepository etlDataLoadRepository;
+	
+	@Autowired
+    RestTemplate restTemplate;
 
 	@GetMapping("/listEtlData")
 	public List<ETLDataLoad> loadEtlData() {
@@ -74,7 +85,7 @@ public class EtlDataLoadController {
 		return sdsDataList;
 	}
 	@GetMapping("/EtlDataCheck")
-	public Map<String, String> loadEtlDataCheck() {
+	public Map<String, String> loadEtlDataCheck() throws JSONException {
 		System.out.println("hi");
 		List<ETLDataLoad> list = etlDataLoadRepository.findAll();
 		List<ETLDataLoad> govtDataList = new ArrayList<ETLDataLoad>();
@@ -110,8 +121,23 @@ public class EtlDataLoadController {
 				if(LocalDate.parse(maxDateRecord.getLastDataLoadDate(), formatter).equals(LocalDate.now())) {
 					map.put(maxDateRecord.getDataFlowType(), "success");
 				}else {
+					JSONObject jsonObject=new JSONObject();
+					jsonObject.put("recordId", maxDateRecord.getRecordId());
+					jsonObject.put("dataFlowType",maxDateRecord.getDataFlowType() );
+					jsonObject.put("message","failed");
 					map.put(maxDateRecord.getDataFlowType(), "failed");
-				}
+					System.out.println(jsonObject.toString());
+					try {
+						HttpHeaders headers = new HttpHeaders();
+						headers.setContentType(MediaType.APPLICATION_JSON);
+						HttpEntity<Object> requestEntity = new HttpEntity<Object>(headers);
+						UriComponentsBuilder builder = UriComponentsBuilder.fromUriString("http://localhost:8190/kafka/send")
+								.queryParam("topic", "etl_failed_record").queryParam("msg", jsonObject.toString());
+						restTemplate.exchange(builder.toUriString(), HttpMethod.GET, requestEntity,String.class);
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
+					}
 		}else if(maxDateRecord.getDataLoadFrequency().equalsIgnoreCase(Constants.LOAD_FREQUENCY_MONTHLY)) {
 			
 		}else if(maxDateRecord.getDataLoadFrequency().equalsIgnoreCase(Constants.LOAD_FREQUENCY_YEARLY)) {
