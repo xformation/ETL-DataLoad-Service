@@ -131,7 +131,7 @@ public class EtlDataLoadController {
 						HttpHeaders headers = new HttpHeaders();
 						headers.setContentType(MediaType.APPLICATION_JSON);
 						HttpEntity<Object> requestEntity = new HttpEntity<Object>(headers);
-						UriComponentsBuilder builder = UriComponentsBuilder.fromUriString("http://localhost:8190/kafka/send")
+						UriComponentsBuilder builder = UriComponentsBuilder.fromUriString("http://100.64.108.25:8190/kafka/send")
 								.queryParam("topic", "etl_failed_record").queryParam("msg", jsonObject.toString());
 						restTemplate.exchange(builder.toUriString(), HttpMethod.GET, requestEntity,String.class);
 					}catch(Exception e) {
