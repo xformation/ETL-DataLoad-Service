@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    
+    <!--
+        Added the entity ETLDataLoad.
+    -->
+    <changeSet id="20201012120205-1" author="jhipster">
+        <createTable tableName="etl_data_load">
+            <!-- <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column> -->
+            <column name="record_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="data_flow_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="data_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="last_data_load_date" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="record_counts" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="data_load_frequency" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="update_ts" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+    </changeSet>
+
+    
+
+</databaseChangeLog>

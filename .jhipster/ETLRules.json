@@ -1,0 +1,38 @@
+{
+  "name": "ETLRules",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "frequency",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "cutOffDay",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "cutOffTime",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [],
+  "changelogDate": "20201012120105",
+  "entityTableName": "etl_rules",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "etldataloadservice",
+  "applications": "*",
+  "microserviceName": "etldataloadservice"
+}

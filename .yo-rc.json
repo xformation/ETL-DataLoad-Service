@@ -1,0 +1,37 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.brc.etl"
+    },
+    "jhipsterVersion": "6.10.1",
+    "applicationType": "microservice",
+    "baseName": "etldataloadservice",
+    "packageName": "com.brc.etl",
+    "packageFolder": "com/brc/etl",
+    "serverPort": "7272",
+    "authenticationType": "jwt",
+    "cacheProvider": "no",
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "postgresql",
+    "prodDatabaseType": "postgresql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "MjQ0Y2VhMTllMWVkOGIwMmJkNmQ3MDkwZDBhYmUxNzY4MmQwMWZlMjA2ZDU4NzcwNTAwNGE3NWNhZmYzYjE4YTQ3ZjA3Y2JlNTVhOTk1NDg4MWQzNmJmNTBhZGRlMjRjODI1NjNlNjU5MGY0ZGFmZjZmZTdjMDM3YWZiMDgzNTA=",
+    "embeddableLaunchScript": false,
+    "creationTimestamp": 1602503728997,
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false,
+    "clientPackageManager": "npm",
+    "blueprints": [],
+    "skipClient": true,
+    "skipUserManagement": true
+  }
+}

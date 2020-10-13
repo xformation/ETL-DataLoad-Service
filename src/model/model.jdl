@@ -1,0 +1,20 @@
+entity ETLRules{
+	name String 
+	type String 
+	frequency String
+	cutOffDay String
+	cutOffTime String
+}
+
+entity ETLDataLoad{
+	recordId Long
+	dataFlowType String
+	dataType String
+	lastDataLoadDate String
+	recordCounts Long
+	dataLoadFrequency String
+	updateTs String
+}
+
+
+dto * with mapstruct service all with serviceImpl

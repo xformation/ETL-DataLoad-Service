@@ -1,0 +1,46 @@
+{
+  "name": "ETLDataLoad",
+  "fields": [
+    {
+      "fieldName": "recordId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "dataFlowType",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dataType",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "lastDataLoadDate",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "recordCounts",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "dataLoadFrequency",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "updateTs",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [],
+  "changelogDate": "20201012120205",
+  "entityTableName": "etl_data_load",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "etldataloadservice",
+  "applications": "*",
+  "microserviceName": "etldataloadservice"
+}
