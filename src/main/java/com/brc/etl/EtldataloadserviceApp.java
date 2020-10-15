@@ -74,7 +74,7 @@ public class EtldataloadserviceApp {
      * @param args the command line arguments.
      */
     public static void main(String[] args) {
-        if(args.length == 1 && args[0].contains("--RUN_AS_SPRING_BOOT=YES")) {
+        if(args.length == 2 && args[1].contains("--RUN_AS_SPRING_BOOT=YES")) {
         	SpringApplication app = new SpringApplication(EtldataloadserviceApp.class);
             DefaultProfileUtil.addDefaultProfile(app);
             Environment env = app.run(args).getEnvironment();
@@ -122,7 +122,7 @@ public class EtldataloadserviceApp {
 
             
             if(args.length >= 2 && !args[0].equalsIgnoreCase("-checkdata")) {
-            	throw new ParseException("Missing required option: -checkData");
+            	throw new ParseException("Missing required option: -checkdata");
 			}
 		
             if(args.length >= 2 && !args[1].equalsIgnoreCase("-rule=rule.json")) {
@@ -147,19 +147,28 @@ public class EtldataloadserviceApp {
 			String frequency=jsonObject.get("frequency").toString();
 			if(frequency.equalsIgnoreCase("daily")) {
 				RestTemplate restTemplate = new RestTemplate();
-				Map<String, String> map = restTemplate.getForObject("http://100.64.108.25:7272/api/EtlDataCheck", Map.class);
+				Map<String, String> map = restTemplate.getForObject("http://localhost:7272/api/EtlDataCheck", Map.class);
 				Set set = map.keySet();
 				for(Object objKey: set) {
 					String key = (String)objKey;
-					String value = (String)map.get(key);
-					if(!key.equalsIgnoreCase("alertname")) {
-						if(value.equalsIgnoreCase("failed")) {
-							System.out.println();
-							System.out.println();
-							System.out.println("Daily frequency rule faild for type : "+key);
-							System.out.println("A new alert generated. Alert name : "+ (String)map.get("alertname"));
-						}
+					String keyAry []= key.split("##");
+					if(keyAry[1].equalsIgnoreCase("failed")) {
+						String value = (String)map.get(key);
+						System.out.println();
+						System.out.println();
+						System.out.println("Daily frequency rule faild for type : "+key);
+//						System.out.println("A new alert generated. Alert name : "+ (String)map.get("alertname"));
+						System.out.println("A new alert generated. Alert name : "+map.get(key));
 					}
+//					String value = (String)map.get(key);
+//					if(!key.equalsIgnoreCase("alertname")) {
+//						if(value.equalsIgnoreCase("failed")) {
+//							System.out.println();
+//							System.out.println();
+//							System.out.println("Daily frequency rule faild for type : "+key);
+//							System.out.println("A new alert generated. Alert name : "+ (String)map.get("alertname"));
+//						}
+//					}
 				}
 			}else {
 				System.out.println("Rule not yet implemented for frequency : "+frequency);
