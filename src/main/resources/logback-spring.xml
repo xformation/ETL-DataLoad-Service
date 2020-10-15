@@ -22,22 +22,10 @@
         <appender-ref ref="FILE"/>
     </appender>
 
-	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender"> 
-	    <!-- encoders are  by default assigned the type
-	         ch.qos.logback.classic.encoder.PatternLayoutEncoder -->
-	    <encoder>
-	      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-	    </encoder>
-	</appender>
-
-	<root level="ERROR">
-	    <appender-ref ref="STDOUT" />
-	</root>
-  
-    <!-- <root level="${logging.level.root}">
-        <appender-ref ref="ASYNC"/>
+	<root level="${logging.level.root}">
+        <appender-ref ref="FILE"/>
     </root>
- -->
+ 
 
     <logger name="javax.activation" level="OFF"/>
     <logger name="javax.mail" level="OFF"/>
