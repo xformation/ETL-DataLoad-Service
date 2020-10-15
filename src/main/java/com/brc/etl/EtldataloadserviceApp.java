@@ -147,7 +147,7 @@ public class EtldataloadserviceApp {
 			String frequency=jsonObject.get("frequency").toString();
 			if(frequency.equalsIgnoreCase("daily")) {
 				RestTemplate restTemplate = new RestTemplate();
-				Map<String, String> map = restTemplate.getForObject("http://localhost:7272/api/EtlDataCheck", Map.class);
+				Map<String, String> map = restTemplate.getForObject("http://100.64.108.25:7272/api/EtlDataCheck", Map.class);
 				Set set = map.keySet();
 				for(Object objKey: set) {
 					String key = (String)objKey;
