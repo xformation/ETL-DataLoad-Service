@@ -1,11 +1,25 @@
 package com.brc.etl;
 
-import com.brc.etl.config.ApplicationProperties;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
 
-import io.github.jhipster.config.DefaultProfileUtil;
-import io.github.jhipster.config.JHipsterConstants;
+import javax.annotation.PostConstruct;
 
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang3.StringUtils;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -13,12 +27,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.env.Environment;
+import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.PostConstruct;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.Arrays;
-import java.util.Collection;
+import com.brc.etl.config.ApplicationProperties;
+import com.brc.etl.domain.ETLDataLoad;
+
+import io.github.jhipster.config.DefaultProfileUtil;
+import io.github.jhipster.config.JHipsterConstants;
 
 @SpringBootApplication
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
@@ -59,10 +74,15 @@ public class EtldataloadserviceApp {
      * @param args the command line arguments.
      */
     public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(EtldataloadserviceApp.class);
-        DefaultProfileUtil.addDefaultProfile(app);
-        Environment env = app.run(args).getEnvironment();
-        logApplicationStartup(env);
+        if(args.length == 1 && args[0].contains("--RUN_AS_SPRING_BOOT")) {
+        	SpringApplication app = new SpringApplication(EtldataloadserviceApp.class);
+            DefaultProfileUtil.addDefaultProfile(app);
+            Environment env = app.run(args).getEnvironment();
+            logApplicationStartup(env);
+		}else {
+			checkData(args);
+		}
+        
     }
 
     private static void logApplicationStartup(Environment env) {
@@ -96,4 +116,74 @@ public class EtldataloadserviceApp {
             contextPath,
             env.getActiveProfiles());
     }
+    
+    public static void checkData(String[] args) {
+		try {
+			Options options = buildOptions();
+			CommandLineParser parser = new DefaultParser();
+			CommandLine cmd = parser.parse(options, args);
+			
+			String checkData = cmd.getOptionValue("checkData");
+            if (checkData == null) {
+                throw new ParseException("Missing required option: -checkData");
+            }
+            
+            String ruleOption = cmd.getOptionValue("rule");
+            if (ruleOption == null) {
+                throw new ParseException("Missing required option: -rule");
+            }
+            
+			boolean checkDataFlag = Boolean.parseBoolean(cmd.getOptionValue("checkData"));
+			String rule = "files/"+cmd.getOptionValue("rule");
+			
+			FileReader fileReader= null;
+			try {
+				fileReader=new FileReader(rule);
+			}catch(Exception e) {
+				throw new FileNotFoundException("rule.json file not found");
+			}
+			
+			JSONParser jsonParser=new JSONParser();
+			Object obj=jsonParser.parse(fileReader);
+			JSONObject  jsonObject=(JSONObject)obj;
+			String frequency=jsonObject.get("frequency").toString();
+			if(frequency.equalsIgnoreCase("daily")) {
+				RestTemplate restTemplate = new RestTemplate();
+				Map<String, String> map = restTemplate.getForObject("http://100.64.108.25:7272/api/EtlDataCheck", Map.class);
+//				System.out.println(map.toString());
+				Set set = map.keySet();
+				for(Object objKey: set) {
+					String key = (String)objKey;
+					String value = (String)map.get(key);
+					if(!key.equalsIgnoreCase("alertid")) {
+						if(value.equalsIgnoreCase("failed")) {
+							System.out.println("Daily frequency rule faild for type : "+key);
+							System.out.println("A new alert generated. Alert id : "+ (String)map.get("alertid"));
+						}
+					}
+					
+				}
+			}else {
+				System.out.println("Rule not yet implemented for frequency : "+frequency);
+			}
+				
+		} catch (Exception e) {
+			System.out.println("Execution failed. Exception : "+e.getMessage());
+		}
+	}
+
+	private static Options buildOptions() {
+		Options options = new Options();
+
+		Option checkDataOption = new Option("checkdata", "checkdata", true, "check Data Flag.");
+		checkDataOption.setRequired(false);
+		options.addOption(checkDataOption);
+
+		Option rule = new Option("rule", "rule", true, "rule.json file.");
+		rule.setRequired(false);
+		options.addOption(rule);
+
+		return options;
+	}
+	
 }
