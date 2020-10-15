@@ -8,7 +8,7 @@
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>etl.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>etllog.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>90</maxHistory>
         </rollingPolicy>
         <encoder>
@@ -27,38 +27,38 @@
     </root>
 
 
-    <logger name="javax.activation" level="WARN"/>
-    <logger name="javax.mail" level="WARN"/>
-    <logger name="javax.management.remote" level="WARN"/>
-    <logger name="javax.xml.bind" level="WARN"/>
-    <logger name="ch.qos.logback" level="WARN"/>
+    <logger name="javax.activation" level="OFF"/>
+    <logger name="javax.mail" level="OFF"/>
+    <logger name="javax.management.remote" level="OFF"/>
+    <logger name="javax.xml.bind" level="OFF"/>
+    <logger name="ch.qos.logback" level="OFF"/>
     
-    <logger name="com.ryantenney" level="WARN"/>
-    <logger name="com.sun" level="WARN"/>
-    <logger name="com.zaxxer" level="WARN"/>
-    <logger name="io.searchbox" level="WARN"/>
-    <logger name="io.undertow" level="WARN"/>
-    <logger name="io.undertow.websockets.jsr" level="ERROR"/>
-    <logger name="org.apache" level="WARN"/>
+    <logger name="com.ryantenney" level="OFF"/>
+    <logger name="com.sun" level="OFF"/>
+    <logger name="com.zaxxer" level="OFF"/>
+    <logger name="io.searchbox" level="OFF"/>
+    <logger name="io.undertow" level="OFF"/>
+    <logger name="io.undertow.websockets.jsr" level="OFF"/>
+    <logger name="org.apache" level="OFF"/>
     <logger name="org.apache.catalina.startup.DigesterFactory" level="OFF"/>
-    <logger name="org.bson" level="WARN"/>
-    <logger name="org.elasticsearch" level="WARN"/>
-    <logger name="org.hibernate.validator" level="WARN"/>
-    <logger name="org.hibernate" level="WARN"/>
+    <logger name="org.bson" level="OFF"/>
+    <logger name="org.elasticsearch" level="OFF"/>
+    <logger name="org.hibernate.validator" level="OFF"/>
+    <logger name="org.hibernate" level="OFF"/>
     <logger name="org.hibernate.ejb.HibernatePersistence" level="OFF"/>
-    <logger name="org.postgresql.jdbc" level="WARN"/>
-    <logger name="org.springframework" level="WARN"/>
-    <logger name="org.springframework.web" level="WARN"/>
-    <logger name="org.springframework.security" level="WARN"/>
-    <logger name="org.springframework.cache" level="WARN"/>
-    <logger name="org.thymeleaf" level="WARN"/>
-    <logger name="org.xnio" level="WARN"/>
-    <logger name="springfox" level="WARN"/>
-    <logger name="sun.rmi" level="WARN"/>
-    <logger name="liquibase" level="WARN"/>
-    <logger name="LiquibaseSchemaResolver" level="INFO"/>
-    <logger name="springfox.documentation.schema.property" level="ERROR"/>
-    <logger name="sun.rmi.transport" level="WARN"/>
+    <logger name="org.postgresql.jdbc" level="OFF"/>
+    <logger name="org.springframework" level="OFF"/>
+    <logger name="org.springframework.web" level="OFF"/>
+    <logger name="org.springframework.security" level="OFF"/>
+    <logger name="org.springframework.cache" level="OFF"/>
+    <logger name="org.thymeleaf" level="OFF"/>
+    <logger name="org.xnio" level="OFF"/>
+    <logger name="springfox" level="OFF"/>
+    <logger name="sun.rmi" level="OFF"/>
+    <logger name="liquibase" level="OFF"/>
+    <logger name="LiquibaseSchemaResolver" level="OFF"/>
+    <logger name="springfox.documentation.schema.property" level="OFF"/>
+    <logger name="sun.rmi.transport" level="OFF"/>
 
     <!-- https://logback.qos.ch/manual/configuration.html#shutdownHook and https://jira.qos.ch/browse/LOGBACK-1090 -->
     <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
