@@ -1,1 +1,1 @@
-java -jar target/etldataloadservice-0.0.1-SNAPSHOT.jar --RUN_AS_SPRING_BOOT=YES > console.log &
+java -jar target/etldataloadservice-0.0.1-SNAPSHOT.jar --RUN_AS_SPRING_BOOT=YES &

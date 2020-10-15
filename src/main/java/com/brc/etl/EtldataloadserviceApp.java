@@ -119,14 +119,7 @@ public class EtldataloadserviceApp {
     
     public static void checkData(String[] args) {
 		try {
-//			Options options = buildOptions();
-//			CommandLineParser parser = new DefaultParser();
-//			CommandLine cmd = parser.parse(options, args);
-			
-//			String checkData = cmd.getOptionValue("checkData");
-//            if (checkData == null) {
-//                throw new ParseException("Missing required option: -checkData");
-//            }
+
             
             if(args.length >= 2 && !args[0].equalsIgnoreCase("-checkdata")) {
             	throw new ParseException("Missing required option: -checkData");
@@ -136,12 +129,8 @@ public class EtldataloadserviceApp {
             	throw new ParseException("Missing required option: -rule");
 			}
             
-            String ruleOption = args[1]; //cmd.getOptionValue("rule");
-//            if (ruleOption == null) {
-//                throw new ParseException("Missing required option: -rule");
-//            }
+            String ruleOption = args[1]; 
             
-//			boolean checkDataFlag = Boolean.parseBoolean(cmd.getOptionValue("checkData"));
 			String ary [] =  ruleOption.split("=");
             String rule = "files/"+ary[1];
 			
@@ -159,18 +148,18 @@ public class EtldataloadserviceApp {
 			if(frequency.equalsIgnoreCase("daily")) {
 				RestTemplate restTemplate = new RestTemplate();
 				Map<String, String> map = restTemplate.getForObject("http://100.64.108.25:7272/api/EtlDataCheck", Map.class);
-//				System.out.println(map.toString());
 				Set set = map.keySet();
 				for(Object objKey: set) {
 					String key = (String)objKey;
 					String value = (String)map.get(key);
-					if(!key.equalsIgnoreCase("alertid")) {
+					if(!key.equalsIgnoreCase("alertname")) {
 						if(value.equalsIgnoreCase("failed")) {
+							System.out.println();
+							System.out.println();
 							System.out.println("Daily frequency rule faild for type : "+key);
-							System.out.println("A new alert generated. Alert id : "+ (String)map.get("alertid"));
+							System.out.println("A new alert generated. Alert name : "+ (String)map.get("alertname"));
 						}
 					}
-					
 				}
 			}else {
 				System.out.println("Rule not yet implemented for frequency : "+frequency);
