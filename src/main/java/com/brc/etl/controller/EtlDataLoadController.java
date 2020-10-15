@@ -111,47 +111,70 @@ public class EtlDataLoadController {
 		
 		List<ETLDataLoad> dailyMaxList = new ArrayList<>();
 		
-		sdsDataList.sort((ETLDataLoad e1, ETLDataLoad e2) -> LocalDate.parse(e2.getLastDataLoadDate(), formatter)
-				.compareTo(LocalDate.parse(e1.getLastDataLoadDate(), formatter)));
-//		ETLDataLoad maxDateRecord=sdsDataList.get(0);
-		if(sdsDataList.size() > 0) {
-			dailyMaxList.add(sdsDataList.get(0));
-		}
-		dcsDataList.sort((ETLDataLoad e1, ETLDataLoad e2) -> LocalDate.parse(e2.getLastDataLoadDate(), formatter)
-				.compareTo(LocalDate.parse(e1.getLastDataLoadDate(), formatter)));
-//		ETLDataLoad maxDateRecord=dcsDataList.get(0);
-		if(dcsDataList.size() > 0) {
-			dailyMaxList.add(dcsDataList.get(0));
+		try {
+			sdsDataList.sort((ETLDataLoad e1, ETLDataLoad e2) -> LocalDate.parse(e2.getLastDataLoadDate(), formatter)
+					.compareTo(LocalDate.parse(e1.getLastDataLoadDate(), formatter)));
+//			ETLDataLoad maxDateRecord=sdsDataList.get(0);
+			if(sdsDataList.size() > 0) {
+				dailyMaxList.add(sdsDataList.get(0));
+			}
+		}catch(Exception e) {
+			logger.error("sdsDataList exception : ",e);
 		}
 		
-		xerfDataList.sort((ETLDataLoad e1, ETLDataLoad e2) -> LocalDate.parse(e2.getLastDataLoadDate(), formatter)
-				.compareTo(LocalDate.parse(e1.getLastDataLoadDate(), formatter)));
-		if(xerfDataList.size() > 0) {
-			dailyMaxList.add(xerfDataList.get(0));
+		try {
+			dcsDataList.sort((ETLDataLoad e1, ETLDataLoad e2) -> LocalDate.parse(e2.getLastDataLoadDate(), formatter)
+					.compareTo(LocalDate.parse(e1.getLastDataLoadDate(), formatter)));
+//			ETLDataLoad maxDateRecord=dcsDataList.get(0);
+			if(dcsDataList.size() > 0) {
+				dailyMaxList.add(dcsDataList.get(0));
+			}
+		}catch(Exception e) {
+			logger.error("dcsDataList exception : ",e);
 		}
 		
-		
-		sednaDataList.sort((ETLDataLoad e1, ETLDataLoad e2) -> LocalDate.parse(e2.getLastDataLoadDate(), formatter)
-				.compareTo(LocalDate.parse(e1.getLastDataLoadDate(), formatter)));
-		if(sednaDataList.size() > 0) {
-			dailyMaxList.add(sednaDataList.get(0));
+		try {
+			xerfDataList.sort((ETLDataLoad e1, ETLDataLoad e2) -> LocalDate.parse(e2.getLastDataLoadDate(), formatter)
+					.compareTo(LocalDate.parse(e1.getLastDataLoadDate(), formatter)));
+			if(xerfDataList.size() > 0) {
+				dailyMaxList.add(xerfDataList.get(0));
+			}
+			
+		}catch(Exception e) {
+			logger.error("xerfDataList exception : ",e);
 		}
 		
-		
-		navDataList.sort((ETLDataLoad e1, ETLDataLoad e2) -> LocalDate.parse(e2.getLastDataLoadDate(), formatter)
-				.compareTo(LocalDate.parse(e1.getLastDataLoadDate(), formatter)));
-		if(navDataList.size() >0 ) {
-			dailyMaxList.add(navDataList.get(0));
+		try {
+			sednaDataList.sort((ETLDataLoad e1, ETLDataLoad e2) -> LocalDate.parse(e2.getLastDataLoadDate(), formatter)
+					.compareTo(LocalDate.parse(e1.getLastDataLoadDate(), formatter)));
+			if(sednaDataList.size() > 0) {
+				dailyMaxList.add(sednaDataList.get(0));
+			}
+			
+		}catch(Exception e) {
+			logger.error("sednaDataList exception : ",e);
 		}
 		
-		
-		govtDataList.sort((ETLDataLoad e1, ETLDataLoad e2) -> LocalDate.parse(e2.getLastDataLoadDate(), formatter)
-				.compareTo(LocalDate.parse(e1.getLastDataLoadDate(), formatter)));
-		if(govtDataList.size() > 0) {
-			dailyMaxList.add(govtDataList.get(0));
+		try {
+			navDataList.sort((ETLDataLoad e1, ETLDataLoad e2) -> LocalDate.parse(e2.getLastDataLoadDate(), formatter)
+					.compareTo(LocalDate.parse(e1.getLastDataLoadDate(), formatter)));
+			if(navDataList.size() >0 ) {
+				dailyMaxList.add(navDataList.get(0));
+			}
+			
+		}catch(Exception e) {
+			logger.error("navDataList exception : ",e);
 		}
 		
-		
+		try {
+			govtDataList.sort((ETLDataLoad e1, ETLDataLoad e2) -> LocalDate.parse(e2.getLastDataLoadDate(), formatter)
+					.compareTo(LocalDate.parse(e1.getLastDataLoadDate(), formatter)));
+			if(govtDataList.size() > 0) {
+				dailyMaxList.add(govtDataList.get(0));
+			}
+		}catch(Exception e) {
+			logger.error("govtDataList exception : ",e);
+		}
 		
 		Map<String, String> map=new HashMap<String, String>();
 		for(ETLDataLoad maxDateRecord: dailyMaxList) {
