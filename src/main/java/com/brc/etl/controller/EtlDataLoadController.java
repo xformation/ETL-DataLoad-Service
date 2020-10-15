@@ -114,28 +114,43 @@ public class EtlDataLoadController {
 		sdsDataList.sort((ETLDataLoad e1, ETLDataLoad e2) -> LocalDate.parse(e2.getLastDataLoadDate(), formatter)
 				.compareTo(LocalDate.parse(e1.getLastDataLoadDate(), formatter)));
 //		ETLDataLoad maxDateRecord=sdsDataList.get(0);
-		dailyMaxList.add(sdsDataList.get(0));
-		
+		if(sdsDataList.size() > 0) {
+			dailyMaxList.add(sdsDataList.get(0));
+		}
 		dcsDataList.sort((ETLDataLoad e1, ETLDataLoad e2) -> LocalDate.parse(e2.getLastDataLoadDate(), formatter)
 				.compareTo(LocalDate.parse(e1.getLastDataLoadDate(), formatter)));
 //		ETLDataLoad maxDateRecord=dcsDataList.get(0);
-		dailyMaxList.add(dcsDataList.get(0));
+		if(dcsDataList.size() > 0) {
+			dailyMaxList.add(dcsDataList.get(0));
+		}
 		
 		xerfDataList.sort((ETLDataLoad e1, ETLDataLoad e2) -> LocalDate.parse(e2.getLastDataLoadDate(), formatter)
 				.compareTo(LocalDate.parse(e1.getLastDataLoadDate(), formatter)));
-		dailyMaxList.add(xerfDataList.get(0));
+		if(xerfDataList.size() > 0) {
+			dailyMaxList.add(xerfDataList.get(0));
+		}
+		
 		
 		sednaDataList.sort((ETLDataLoad e1, ETLDataLoad e2) -> LocalDate.parse(e2.getLastDataLoadDate(), formatter)
 				.compareTo(LocalDate.parse(e1.getLastDataLoadDate(), formatter)));
-		dailyMaxList.add(sednaDataList.get(0));
+		if(sednaDataList.size() > 0) {
+			dailyMaxList.add(sednaDataList.get(0));
+		}
+		
 		
 		navDataList.sort((ETLDataLoad e1, ETLDataLoad e2) -> LocalDate.parse(e2.getLastDataLoadDate(), formatter)
 				.compareTo(LocalDate.parse(e1.getLastDataLoadDate(), formatter)));
+		if(navDataList.size() >0 ) {
+			dailyMaxList.add(navDataList.get(0));
+		}
 		dailyMaxList.add(navDataList.get(0));
 		
 		govtDataList.sort((ETLDataLoad e1, ETLDataLoad e2) -> LocalDate.parse(e2.getLastDataLoadDate(), formatter)
 				.compareTo(LocalDate.parse(e1.getLastDataLoadDate(), formatter)));
-		dailyMaxList.add(govtDataList.get(0));
+		if(govtDataList.size() > 0) {
+			dailyMaxList.add(govtDataList.get(0));
+		}
+		
 		
 		
 		Map<String, String> map=new HashMap<String, String>();
