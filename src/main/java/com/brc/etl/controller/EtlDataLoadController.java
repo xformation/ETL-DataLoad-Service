@@ -143,7 +143,7 @@ public class EtlDataLoadController {
 		if(navDataList.size() >0 ) {
 			dailyMaxList.add(navDataList.get(0));
 		}
-		dailyMaxList.add(navDataList.get(0));
+		
 		
 		govtDataList.sort((ETLDataLoad e1, ETLDataLoad e2) -> LocalDate.parse(e2.getLastDataLoadDate(), formatter)
 				.compareTo(LocalDate.parse(e1.getLastDataLoadDate(), formatter)));
