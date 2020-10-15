@@ -125,7 +125,7 @@ public class EtlDataLoadController {
 //					jsonObject.put("message","failed");
 					UUID uuid=UUID.randomUUID();
 					jsonObject.put("guid", uuid.toString());
-					jsonObject.put("name", maxDateRecord.getDataFlowType() + " " + maxDateRecord.getDataLoadFrequency() + " failed alert");
+					jsonObject.put("name", maxDateRecord.getDataFlowType() + "_" + maxDateRecord.getDataLoadFrequency() + "_failed_"+System.currentTimeMillis());
 					jsonObject.put("severity", "Hight");
 					jsonObject.put("monitorcondition", "Fired");
 					jsonObject.put("affectedresource", "ETL DataLoad Service");

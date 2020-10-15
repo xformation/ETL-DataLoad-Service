@@ -119,22 +119,31 @@ public class EtldataloadserviceApp {
     
     public static void checkData(String[] args) {
 		try {
-			Options options = buildOptions();
-			CommandLineParser parser = new DefaultParser();
-			CommandLine cmd = parser.parse(options, args);
+//			Options options = buildOptions();
+//			CommandLineParser parser = new DefaultParser();
+//			CommandLine cmd = parser.parse(options, args);
 			
-			String checkData = cmd.getOptionValue("checkData");
-            if (checkData == null) {
-                throw new ParseException("Missing required option: -checkData");
-            }
+//			String checkData = cmd.getOptionValue("checkData");
+//            if (checkData == null) {
+//                throw new ParseException("Missing required option: -checkData");
+//            }
             
-            String ruleOption = cmd.getOptionValue("rule");
-            if (ruleOption == null) {
-                throw new ParseException("Missing required option: -rule");
-            }
+            if(args.length >= 2 && !args[0].equalsIgnoreCase("-checkdata")) {
+            	throw new ParseException("Missing required option: -checkData");
+			}
+		
+            if(args.length >= 2 && !args[1].equalsIgnoreCase("-rule=rule.json")) {
+            	throw new ParseException("Missing required option: -rule");
+			}
             
-			boolean checkDataFlag = Boolean.parseBoolean(cmd.getOptionValue("checkData"));
-			String rule = "files/"+cmd.getOptionValue("rule");
+            String ruleOption = args[1]; //cmd.getOptionValue("rule");
+//            if (ruleOption == null) {
+//                throw new ParseException("Missing required option: -rule");
+//            }
+            
+//			boolean checkDataFlag = Boolean.parseBoolean(cmd.getOptionValue("checkData"));
+			String ary [] =  ruleOption.split("=");
+            String rule = "files/"+ary[1];
 			
 			FileReader fileReader= null;
 			try {
