@@ -74,7 +74,7 @@ public class EtldataloadserviceApp {
      * @param args the command line arguments.
      */
     public static void main(String[] args) {
-        if(args.length == 1 && args[0].contains("--RUN_AS_SPRING_BOOT")) {
+        if(args.length == 1 && args[0].contains("--RUN_AS_SPRING_BOOT=YES")) {
         	SpringApplication app = new SpringApplication(EtldataloadserviceApp.class);
             DefaultProfileUtil.addDefaultProfile(app);
             Environment env = app.run(args).getEnvironment();
