@@ -156,7 +156,7 @@ public class EtldataloadserviceApp {
 						String value = (String)map.get(key);
 						System.out.println();
 						System.out.println();
-						System.out.println("Daily frequency rule faild for type : "+key);
+						System.out.println("Daily frequency rule faild for type : "+keyAry[0]);
 //						System.out.println("A new alert generated. Alert name : "+ (String)map.get("alertname"));
 						System.out.println("A new alert generated. Alert name : "+map.get(key));
 					}

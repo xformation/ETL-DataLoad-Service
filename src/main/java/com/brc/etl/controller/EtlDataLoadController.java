@@ -119,7 +119,7 @@ public class EtlDataLoadController {
 				dailyMaxList.add(sdsDataList.get(0));
 			}
 		}catch(Exception e) {
-			logger.error("sdsDataList exception : ",e);
+			logger.error("sdsDataList exception : "+e.getMessage());
 		}
 		
 		try {
@@ -130,7 +130,7 @@ public class EtlDataLoadController {
 				dailyMaxList.add(dcsDataList.get(0));
 			}
 		}catch(Exception e) {
-			logger.error("dcsDataList exception : ",e);
+			logger.error("dcsDataList exception : "+e.getMessage());
 		}
 		
 		try {
@@ -141,7 +141,7 @@ public class EtlDataLoadController {
 			}
 			
 		}catch(Exception e) {
-			logger.error("xerfDataList exception : ",e);
+			logger.error("xerfDataList exception : "+e.getMessage());
 		}
 		
 		try {
@@ -152,7 +152,7 @@ public class EtlDataLoadController {
 			}
 			
 		}catch(Exception e) {
-			logger.error("sednaDataList exception : ",e);
+			logger.error("sednaDataList exception : "+e.getMessage());
 		}
 		
 		try {
@@ -163,7 +163,7 @@ public class EtlDataLoadController {
 			}
 			
 		}catch(Exception e) {
-			logger.error("navDataList exception : ",e);
+			logger.error("navDataList exception : "+e.getMessage());
 		}
 		
 		try {
@@ -173,7 +173,7 @@ public class EtlDataLoadController {
 				dailyMaxList.add(govtDataList.get(0));
 			}
 		}catch(Exception e) {
-			logger.error("govtDataList exception : ",e);
+			logger.error("govtDataList exception : "+e.getMessage());
 		}
 		
 		Map<String, String> map=new HashMap<String, String>();
