@@ -27,6 +27,7 @@ public class EtldataloadserviceApp {
     private static final Logger log = LoggerFactory.getLogger(EtldataloadserviceApp.class);
 
     private final Environment env;
+    private final boolean runFlag=false;
 
     public EtldataloadserviceApp(Environment env) {
         this.env = env;
