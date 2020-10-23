@@ -258,7 +258,7 @@ public class EtlDataLoadController {
 		jsonObject.put("action-time", Instant.now());
 		jsonObject.put("ticket", "");
 		jsonObject.put("ticket_description", "");
-		jsonObject.put("user", "");
+		jsonObject.put("user", "Automated");
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<Object> requestEntity = new HttpEntity<Object>(headers);
