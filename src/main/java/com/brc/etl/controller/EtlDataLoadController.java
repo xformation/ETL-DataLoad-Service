@@ -220,11 +220,14 @@ public class EtlDataLoadController {
 							UriComponentsBuilder builder = UriComponentsBuilder.fromUriString("http://localhost:8190/kafka/send")
 									.queryParam("topic", "alert").queryParam("msg", jsonObject.toString());
 							restTemplate.exchange(builder.toUriString(), HttpMethod.GET, requestEntity,String.class);
+							sendAlertActivity(uuid.toString(), alertName);
 							}catch(Exception e) {
 								logger.error("Exception in sending aler to kafka: ",e);
 								map.put(maxDateRecord.getDataFlowType()+"##failed", "");
 							}
 						}
+					
+						
 			}else if(maxDateRecord.getDataLoadFrequency().equalsIgnoreCase(Constants.LOAD_FREQUENCY_MONTHLY)) {
 				
 			}else if(maxDateRecord.getDataLoadFrequency().equalsIgnoreCase(Constants.LOAD_FREQUENCY_YEARLY)) {
@@ -245,4 +248,24 @@ public class EtlDataLoadController {
 	    }
 
 
+	 public void sendAlertActivity(String guid, String alertName) throws JSONException {
+		logger.info("Sending data to kafka alert_activity "); 
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("guid", guid);
+		jsonObject.put("name", alertName);
+		jsonObject.put("action","Alert Updated");
+		jsonObject.put("action_description", "New alert fired");
+		jsonObject.put("action-time", Instant.now());
+		jsonObject.put("ticket", "");
+		jsonObject.put("ticket_description", "");
+		jsonObject.put("user", "");
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<Object> requestEntity = new HttpEntity<Object>(headers);
+		UriComponentsBuilder builder = UriComponentsBuilder
+				.fromUriString("http://100.64.108.25:8190/kafka/send")
+				.queryParam("topic", "alert_activity").queryParam("msg", jsonObject.toString());
+		restTemplate.exchange(builder.toUriString(), HttpMethod.GET, requestEntity, String.class);
+		logger.debug("Alert updated in elasticsearch successfully");
+	}
 }
