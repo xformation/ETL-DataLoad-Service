@@ -80,7 +80,17 @@ public class EtldataloadserviceApp {
             Environment env = app.run(args).getEnvironment();
             logApplicationStartup(env);
 		}else {
-			checkData(args);
+			
+			if(args.length >= 2 && args[0].equalsIgnoreCase("-start_scheduler")) {
+				scheduler(args);
+			}else if(args.length >= 2 && args[0].equalsIgnoreCase("-check_data")){
+				checkData(args);
+			}else {
+				System.out.println("Invalid options.");
+				System.exit(0);
+			}
+		
+			
 		}
         
     }
@@ -121,9 +131,9 @@ public class EtldataloadserviceApp {
 		try {
 
             
-            if(args.length >= 2 && !args[0].equalsIgnoreCase("-checkdata")) {
-            	throw new ParseException("Missing required option: -checkdata");
-			}
+//            if(args.length >= 2 && !args[0].equalsIgnoreCase("-check_data")) {
+//            	throw new ParseException("Missing required option: -checkdata");
+//			}
 		
             if(args.length >= 2 && !args[1].equalsIgnoreCase("-rule=rule.json")) {
             	throw new ParseException("Missing required option: -rule");
@@ -179,6 +189,66 @@ public class EtldataloadserviceApp {
 		}
 	}
 
+    public static void scheduler(String[] args) {
+		try {
+
+            if(args.length >= 2 && !args[1].equalsIgnoreCase("-rule=rule.json")) {
+            	throw new ParseException("Missing required option: -rule");
+			}
+            
+            String ruleOption = args[1]; 
+            
+			String ary [] =  ruleOption.split("=");
+            String rule = "files/"+ary[1];
+			
+			FileReader fileReader= null;
+			try {
+				fileReader=new FileReader(rule);
+			}catch(Exception e) {
+				throw new FileNotFoundException("rule.json file not found");
+			}
+			
+			JSONParser jsonParser=new JSONParser();
+			Object obj=jsonParser.parse(fileReader);
+			JSONObject  jsonObject=(JSONObject)obj;
+			
+			
+            while(true) {
+            	try {
+            		String frequency=jsonObject.get("frequency").toString();
+        			if(frequency.equalsIgnoreCase("daily")) {
+        				RestTemplate restTemplate = new RestTemplate();
+        				Map<String, String> map = restTemplate.getForObject("http://100.64.108.25:7272/api/EtlDataCheck", Map.class);
+        				Set set = map.keySet();
+        				for(Object objKey: set) {
+        					String key = (String)objKey;
+        					String keyAry []= key.split("##");
+        					if(keyAry[1].equalsIgnoreCase("failed")) {
+        						String value = (String)map.get(key);
+        						System.out.println();
+        						System.out.println();
+        						System.out.println("Daily frequency rule faild for type : "+keyAry[0]);
+//        						System.out.println("A new alert generated. Alert name : "+ (String)map.get("alertname"));
+        						System.out.println("A new alert generated. Alert name : "+map.get(key));
+        					}
+        				}
+        			}else {
+        				System.out.println("Rule not yet implemented for frequency : "+frequency);
+        			}
+        			Thread.sleep(60*1000*60);
+            	}catch (InterruptedException ex) {
+					log.warn("InterruptedException :",ex);
+				} catch (Exception e) {
+					log.warn("Exception: ",e);
+				}
+            }
+            
+				
+		} catch (Exception e) {
+			System.out.println("Execution failed. Exception : "+e.getMessage());
+		}
+	}
+    
 	private static Options buildOptions() {
 		Options options = new Options();
 
