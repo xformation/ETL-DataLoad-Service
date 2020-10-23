@@ -253,8 +253,8 @@ public class EtlDataLoadController {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("guid", guid);
 		jsonObject.put("name", alertName);
-		jsonObject.put("action","Alert Updated");
-		jsonObject.put("action_description", "New alert fired");
+		jsonObject.put("action","New alert fired");
+		jsonObject.put("action_description", "New alert fired from ETL data load");
 		jsonObject.put("action-time", Instant.now());
 		jsonObject.put("ticket", "");
 		jsonObject.put("ticket_description", "");
