@@ -217,7 +217,7 @@ public class EtlDataLoadController {
 							HttpHeaders headers = new HttpHeaders();
 							headers.setContentType(MediaType.APPLICATION_JSON);
 							HttpEntity<Object> requestEntity = new HttpEntity<Object>(headers);
-							UriComponentsBuilder builder = UriComponentsBuilder.fromUriString("http://localhost:8190/kafka/send")
+							UriComponentsBuilder builder = UriComponentsBuilder.fromUriString("http://100.64.108.25:8190/kafka/send")
 									.queryParam("topic", "alert").queryParam("msg", jsonObject.toString());
 							restTemplate.exchange(builder.toUriString(), HttpMethod.GET, requestEntity,String.class);
 							sendAlertActivity(uuid.toString(), alertName);
@@ -264,7 +264,7 @@ public class EtlDataLoadController {
 		HttpEntity<Object> requestEntity = new HttpEntity<Object>(headers);
 		UriComponentsBuilder builder = UriComponentsBuilder
 				.fromUriString("http://100.64.108.25:8190/kafka/send")
-				.queryParam("topic", "alert_activity").queryParam("msg", jsonObject.toString());
+				.queryParam("topic", "alert_activity2").queryParam("msg", jsonObject.toString());
 		restTemplate.exchange(builder.toUriString(), HttpMethod.GET, requestEntity, String.class);
 		logger.debug("Alert updated in elasticsearch successfully");
 	}
