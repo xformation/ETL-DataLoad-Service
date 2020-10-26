@@ -249,13 +249,13 @@ public class EtlDataLoadController {
 
 
 	 public void sendAlertActivity(String guid, String alertName) throws JSONException {
-		logger.info("Sending data to kafka alert_activity "); 
+		logger.info("Sending data to kafka alert_activity_final "); 
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("guid", guid);
 		jsonObject.put("name", alertName);
 		jsonObject.put("action","New alert fired");
 		jsonObject.put("action_description", "New alert fired from ETL data load");
-		jsonObject.put("action-time", Instant.now());
+		jsonObject.put("action_time", Instant.now());
 		jsonObject.put("ticket", "");
 		jsonObject.put("ticket_description", "");
 		jsonObject.put("user", "Automated");
@@ -264,8 +264,8 @@ public class EtlDataLoadController {
 		HttpEntity<Object> requestEntity = new HttpEntity<Object>(headers);
 		UriComponentsBuilder builder = UriComponentsBuilder
 				.fromUriString("http://100.64.108.25:8190/kafka/send")
-				.queryParam("topic", "alert_activity2").queryParam("msg", jsonObject.toString());
+				.queryParam("topic", "alert_activity_final").queryParam("msg", jsonObject.toString());
 		restTemplate.exchange(builder.toUriString(), HttpMethod.GET, requestEntity, String.class);
-		logger.debug("Alert updated in elasticsearch successfully");
+		logger.info("Data sent to kafka alert_activity_final queue");
 	}
 }
