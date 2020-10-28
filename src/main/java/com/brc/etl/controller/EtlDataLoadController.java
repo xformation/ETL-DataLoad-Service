@@ -202,8 +202,8 @@ public class EtlDataLoadController {
 						jsonObject.put("resourcegroup", "Compute");
 						jsonObject.put("resources", "App");
 						jsonObject.put("firedtime",Instant.now());
-						jsonObject.put("createdon", Instant.now());
-						jsonObject.put("updatedon", Instant.now());
+						jsonObject.put("created_on", Instant.now());
+						jsonObject.put("updated_on", Instant.now());
 						jsonObject.put("alert_state", "New");
 						jsonObject.put("client", "EXTERNAL SERVICE");
 						jsonObject.put("client_url", "");
@@ -264,7 +264,7 @@ public class EtlDataLoadController {
 		HttpEntity<Object> requestEntity = new HttpEntity<Object>(headers);
 		UriComponentsBuilder builder = UriComponentsBuilder
 				.fromUriString("http://100.64.108.25:8190/kafka/send")
-				.queryParam("topic", "alert_activity_final").queryParam("msg", jsonObject.toString());
+				.queryParam("topic", "alert_activity").queryParam("msg", jsonObject.toString());
 		restTemplate.exchange(builder.toUriString(), HttpMethod.GET, requestEntity, String.class);
 		logger.info("Data sent to kafka alert_activity_final queue");
 	}

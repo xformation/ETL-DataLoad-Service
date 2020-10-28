@@ -11,9 +11,6 @@ import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
@@ -30,7 +27,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.web.client.RestTemplate;
 
 import com.brc.etl.config.ApplicationProperties;
-import com.brc.etl.domain.ETLDataLoad;
 
 import io.github.jhipster.config.DefaultProfileUtil;
 import io.github.jhipster.config.JHipsterConstants;
@@ -190,6 +186,7 @@ public class EtldataloadserviceApp {
 	}
 
     public static void scheduler(String[] args) {
+    	
 		try {
 
             if(args.length >= 2 && !args[1].equalsIgnoreCase("-rule=rule.json")) {
@@ -212,7 +209,7 @@ public class EtldataloadserviceApp {
 			Object obj=jsonParser.parse(fileReader);
 			JSONObject  jsonObject=(JSONObject)obj;
 			
-			
+			System.out.println("Scheduler starting");
             while(true) {
             	try {
             		String frequency=jsonObject.get("frequency").toString();
@@ -262,5 +259,6 @@ public class EtldataloadserviceApp {
 
 		return options;
 	}
+	
 	
 }
