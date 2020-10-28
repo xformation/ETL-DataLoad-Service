@@ -201,9 +201,9 @@ public class EtlDataLoadController {
 						jsonObject.put("suppressionstate", "None");
 						jsonObject.put("resourcegroup", "Compute");
 						jsonObject.put("resources", "App");
-						jsonObject.put("firedtime",Instant.now());
-						jsonObject.put("created_on", Instant.now());
-						jsonObject.put("updated_on", Instant.now());
+						jsonObject.put("firedtime", Instant.now());
+						jsonObject.put("created_on", System.currentTimeMillis());
+						jsonObject.put("updated_on", System.currentTimeMillis());
 						jsonObject.put("alert_state", "New");
 						jsonObject.put("client", "EXTERNAL SERVICE");
 						jsonObject.put("client_url", "");
