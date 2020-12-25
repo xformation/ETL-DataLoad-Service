@@ -202,7 +202,7 @@ public class EtlDataLoadController {
 						jsonObject.put("suppressionstate", "None");
 						jsonObject.put("resourcegroup", "Compute");
 						jsonObject.put("resources", "App");
-						jsonObject.put("firedtime", Instant.now());
+						jsonObject.put("firedtime", Instant.now().toString());
 						jsonObject.put("created_on", System.currentTimeMillis());
 						jsonObject.put("updated_on", System.currentTimeMillis());
 						jsonObject.put("alert_state", "New");
@@ -218,7 +218,7 @@ public class EtlDataLoadController {
 							HttpHeaders headers = new HttpHeaders();
 							headers.setContentType(MediaType.APPLICATION_JSON);
 							HttpEntity<Object> requestEntity = new HttpEntity<Object>(headers);
-							UriComponentsBuilder builder = UriComponentsBuilder.fromUriString("http://100.64.108.25:8190/kafka/send")
+							UriComponentsBuilder builder = UriComponentsBuilder.fromUriString("http://localhost:8190/kafka/send")
 									.queryParam("topic", "alert").queryParam("msg", jsonObject.toString());
 							restTemplate.exchange(builder.toUriString(), HttpMethod.GET, requestEntity,String.class);
 							sendAlertActivity(uuid.toString(), alertName);
